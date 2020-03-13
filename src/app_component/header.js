@@ -2,8 +2,8 @@ import React from 'react'
 
 function header() {
   return (
-    <div>
-      <h1>Weather </h1>
+    <div className="container text-center">
+      <h1>Weather App</h1>
     </div>
   )
 }
