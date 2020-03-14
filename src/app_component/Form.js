@@ -4,8 +4,17 @@ import './form.style.css'
 
 function Form(props) {
     const [InputValue, setInputValue] = useState("");
-    const [SavedCountries, setSavedCountries] = useState([""]);
+    const [getCountries] = useState(JSON.parse(localStorage.getItem("city")))
+    const [SavedCountries, setSavedCountries] = useState(() =>{
+        if(getCountries != null) {
+            return getCountries
+        }else{
+            return [""]
+        }
+    })
+        
     
+
     function onInputClick(){
         if(localStorage.getItem("city") != null){
             setSavedCountries(JSON.parse(localStorage.getItem("city")))

@@ -26,14 +26,10 @@ class SearchResultComponent extends Component {
       fiveDayForecast4:{},
       fiveDayForecast5:{}
     };
-    this.onLoad();
+
     this.getGeoLocationWeather(this.state.city);
   }
-  onLoad(){
-    if(window.location.protocol==="https:")
-             window.location.protocol="http";
-             console.log("Loaded http")
-  }
+
   showMoreInfo(){
     if(this.state.itemArray.length > 0){
       this.setState({
