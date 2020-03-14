@@ -7,7 +7,7 @@ import Header from './app_component/header'
 
 function App() {
   return (
-    <div>
+    <div className="App">
     <Header/>
       <SearchResultComponent/>
     </div>
