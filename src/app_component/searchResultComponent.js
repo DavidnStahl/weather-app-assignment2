@@ -8,6 +8,7 @@ class SearchResultComponent extends Component {
   constructor(){
     super();
     this.state = {
+      saveButton: "No",
       weekday: ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],    
       city:'Stockholm',
       errorMessage: "",
@@ -34,6 +35,8 @@ class SearchResultComponent extends Component {
         itemArray: [],
         buttonText: "Show five day forecast"
       })
+
+      
       return
     }
     else{
@@ -50,38 +53,25 @@ class SearchResultComponent extends Component {
     this.setState({
       itemArray: item,
       buttonText: "Hide"
+
     })
     }      
   }
 
   getGeoLocationWeather = async (city) => {
     
-    let API_Key = "d8f0bc5b04e20b0c7533536f49160c54"
+  let API_Key = "d8f0bc5b04e20b0c7533536f49160c54"
 
-    let response = await fetch(`http://api.openweathermap.org/data/2.5/find?q=${city}&units=metric&appid=${API_Key}`)
-                         .then( res => {
-                           if(!res.ok) {
-                            this.setState({
-                              errorMessage: "Can´t find city",
-                            })
-                               throw res 
-                              }
-                              this.setState({
-                                errorMessage: "",
-                              })
-                           return res.json()
-                         })
-                         
-    let response2 = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_Key}`)
-                          .then( res => {
-                            if(!res.ok) { throw res }
-                            return res.json();
-                          })
-    let response5dayForecast = await fetch(`http://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&appid=${API_Key}`)
-                                    .then( res => {
-                                      if(!res.ok) { throw res }
-                                      return res.json();
-                                    });
+  let response = await fetch(`http://api.openweathermap.org/data/2.5/find?q=${city}&units=metric&appid=${API_Key}`)
+                         .then( res => {if(!res.ok) {this.setState({errorMessage: "Can´t find city",})
+                               throw res }this.setState({errorMessage: ""})
+                               return res.json()})
+  let response2 = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_Key}`)
+                          .then( res => {if(!res.ok) { throw res }
+                            return res.json();})
+  let response5dayForecast = await fetch(`http://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&appid=${API_Key}`)
+                                    .then( res => {if(!res.ok) { throw res }
+                                      return res.json();});
 
     this.setState({
       city: response.list[0].name,
@@ -138,22 +128,22 @@ class SearchResultComponent extends Component {
        }
   })
 }
-
   getWeather = async (e) => {
-  
   e.preventDefault();
   let city = e.target.elements.city.value
   await this.getGeoLocationWeather(city)
-   
+    if(this.state.errorMessage === ""){
+      this.setState({saveButton: "Yes"})
+    } 
   }
  
   render() {
       return (
           <div className="container-fluid">
-          <Form placeholderinput={this.state.errorMessage} loadweather={this.getWeather}/>
+          <Form placeholderinput={this.state.errorMessage} savecity={this.state.city} loadweather={this.getWeather} buttonsave={this.state.saveButton}/>
           <Weather  tempMax={this.state.tempMax} tempMin={this.state.tempMin} description={this.state.description}temp={this.state.temp} weathericon={this.state.weathericon} city={this.state.city} country={this.state.country}/>
           <div className="row mx-md-n5"><div className="float-left text-center  col px-md-3">
-          <button className="btn btn-info" onClick={this.showMoreInfo.bind(this)}>{this.state.buttonText}</button>
+          <button className="btn btn-warning" onClick={this.showMoreInfo.bind(this)}>{this.state.buttonText}</button>
           </div>
           </div>
           {this.state.itemArray.map((item) => {

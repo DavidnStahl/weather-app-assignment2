@@ -5,6 +5,18 @@ body{
   min-height: 100vh;
 }
 
+option { 
+  /* Whatever color  you want */
+  color: black;
+  
+}
+.header-name{
+  margin-top: 3% !important;
+}
+/* specifically hide the arrow on focus */
+input::-webkit-calendar-picker-indicator {
+	display: none;
+}
 .App {
   text-align: center;
   color:white;
