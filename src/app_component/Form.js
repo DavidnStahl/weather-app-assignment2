@@ -30,9 +30,7 @@ function Form(props) {
         <div className="container">
             <form onSubmit={props.loadweather}>
             <div className="row m-5">
-            <div className="col-md-4 offset-md-4">
-                </div>
-                <div className="col-md-4 offset-md-4">
+                <div className="col-md-3 offset-md-4">
                     <input list="cityname" placeholder="City" value={InputValue} onChange={setInputValueFunction} type="text" className="form-control" name="city" autoComplete="off" />
                     <datalist id="cityname"> 
                        {SavedCountries.map( city => {
