@@ -56,13 +56,11 @@ function Form(props) {
                      </datalist> 
                 </div>
                 <div className="col-md-4 mt-md-0 text-md-left">      
-                    <button className="btn btn-warning">Get Weather</button>
+                    <button  onClick={saveCity} className="btn btn-warning">Get Weather</button>
                 </div>               
             </div>
             <h4 className="col-md-2 offset-md-5 text-danger">{props.placeholderinput}</h4>
             </form>
-            
-            <button className="btn btn-warning text-black" onClick={saveCity}>Save City</button>
             
         </div>
     )
