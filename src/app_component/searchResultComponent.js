@@ -7,7 +7,8 @@ import Form from './Form';
 class SearchResultComponent extends Component {
   constructor(){
     super();
-    this.state = {     
+    this.state = {
+      weekday: ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],    
       city:'Stockholm',
       errorMessage: "",
       country:undefined,
@@ -80,8 +81,7 @@ class SearchResultComponent extends Component {
                                     .then( res => {
                                       if(!res.ok) { throw res }
                                       return res.json();
-                                    })
-
+                                    });
 
     this.setState({
       city: response.list[0].name,
@@ -93,7 +93,7 @@ class SearchResultComponent extends Component {
       weathericon: response2.weather[0].icon,
       fiveDayForecast1: {
         city: response.list[0].name,
-        date: response5dayForecast.list[7].dt_txt,
+        date: this.state.weekday[new Date(response5dayForecast.list[7].dt_txt).getDay()],
         temp: response5dayForecast.list[7].main.temp.toFixed(1),
         tempMin: response5dayForecast.list[7].main.temp_min.toFixed(1),
         tempMax: response5dayForecast.list[7].main.temp_max.toFixed(1),
@@ -102,7 +102,7 @@ class SearchResultComponent extends Component {
        },
        fiveDayForecast2: {
         city: response.list[0].name,
-        date: response5dayForecast.list[15].dt_txt,
+        date: this.state.weekday[new Date(response5dayForecast.list[15].dt_txt).getDay()],
         temp: response5dayForecast.list[15].main.temp.toFixed(1),
         tempMin: response5dayForecast.list[15].main.temp_min.toFixed(1),
         tempMax: response5dayForecast.list[15].main.temp_max.toFixed(1),
@@ -111,7 +111,7 @@ class SearchResultComponent extends Component {
        },
        fiveDayForecast3: {
         city: response.list[0].name,
-        date: response5dayForecast.list[23].dt_txt,
+        date: this.state.weekday[new Date(response5dayForecast.list[23].dt_txt).getDay()],
         temp: response5dayForecast.list[23].main.temp.toFixed(1),
         tempMin: response5dayForecast.list[23].main.temp_min.toFixed(1),
         tempMax: response5dayForecast.list[23].main.temp_max.toFixed(1),
@@ -120,7 +120,7 @@ class SearchResultComponent extends Component {
        },
        fiveDayForecast4: {
         city: response.list[0].name,
-        date: response5dayForecast.list[31].dt_txt,
+        date: this.state.weekday[new Date(response5dayForecast.list[31].dt_txt).getDay()],
         temp: response5dayForecast.list[31].main.temp.toFixed(1),
         tempMin: response5dayForecast.list[31].main.temp_min.toFixed(1),
         tempMax: response5dayForecast.list[31].main.temp_max.toFixed(1),
@@ -129,7 +129,7 @@ class SearchResultComponent extends Component {
        },
        fiveDayForecast5: {
         city: response.list[0].name,
-        date: response5dayForecast.list[39].dt_txt,
+        date: this.state.weekday[new Date(response5dayForecast.list[39].dt_txt).getDay()],
         temp: response5dayForecast.list[39].main.temp.toFixed(1),
         tempMin: response5dayForecast.list[39].main.temp_min.toFixed(1),
         tempMax: response5dayForecast.list[39].main.temp_max.toFixed(1),
