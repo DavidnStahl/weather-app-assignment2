@@ -5,7 +5,9 @@ import SearchResultComponent from './app_component/searchResultComponent';
 import Header from './app_component/header'
 
 
+
 function App() {
+  
   return (
     <div className="App">
     <Header/>

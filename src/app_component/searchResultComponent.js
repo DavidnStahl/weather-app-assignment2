@@ -26,9 +26,14 @@ class SearchResultComponent extends Component {
       fiveDayForecast4:{},
       fiveDayForecast5:{}
     };
+    this.onLoad();
     this.getGeoLocationWeather(this.state.city);
   }
-
+  onLoad(){
+    if(window.location.protocol==="https:")
+             window.location.protocol="http";
+             console.log("Loaded http")
+  }
   showMoreInfo(){
     if(this.state.itemArray.length > 0){
       this.setState({
@@ -62,14 +67,14 @@ class SearchResultComponent extends Component {
     
   let API_Key = "d8f0bc5b04e20b0c7533536f49160c54"
 
-  let response = await fetch(`https://api.openweathermap.org/data/2.5/find?q=${city}&units=metric&appid=${API_Key}`)
+  let response = await fetch(`http://api.openweathermap.org/data/2.5/find?q=${city}&units=metric&appid=${API_Key}`)
                          .then( res => {if(!res.ok) {this.setState({errorMessage: "Can´t find city",})
                                throw res }this.setState({errorMessage: ""})
                                return res.json()})
-  let response2 = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_Key}`)
+  let response2 = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_Key}`)
                           .then( res => {if(!res.ok) { throw res }
                             return res.json();})
-  let response5dayForecast = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&appid=${API_Key}`)
+  let response5dayForecast = await fetch(`http://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&appid=${API_Key}`)
                                     .then( res => {if(!res.ok) { throw res }
                                       return res.json();});
 
