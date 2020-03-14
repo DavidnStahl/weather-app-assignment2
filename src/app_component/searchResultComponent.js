@@ -58,6 +58,7 @@ class SearchResultComponent extends Component {
     })
     }      
   }
+  
 
   getGeoLocationWeather = async (city) => {
     
@@ -74,6 +75,8 @@ class SearchResultComponent extends Component {
                                     .then( res => {if(!res.ok) { throw res }
                                       return res.json();});
 
+                                      
+    
     this.setState({
       city: response.list[0].name,
       country: response.list[0].sys.country,

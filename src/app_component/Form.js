@@ -25,20 +25,21 @@ function Form(props) {
         setInputValue(element.target.value)    
     }
     function saveCity(){
-    let listOfCity = localStorage.getItem("city")
-    if(listOfCity === null) {
-        listOfCity = [`${props.savecity}`]
-        localStorage.setItem("city",`${JSON.stringify(listOfCity)}`)
-    }
-    else{
-        listOfCity = JSON.parse(localStorage.getItem("city"))
-        listOfCity.push(props.savecity)
-        let uniqueArray = listOfCity.filter(function(item, pos, self) {
-            return self.indexOf(item) === pos;
-        });
-
-        localStorage.setItem("city",`${JSON.stringify(uniqueArray)}`)
-    }
+        let listOfCity = localStorage.getItem("city")
+        if(listOfCity === null) {
+            listOfCity = [`${props.savecity}`]
+            localStorage.setItem("city",`${JSON.stringify(listOfCity)}`)
+        }
+        else{
+            listOfCity = JSON.parse(localStorage.getItem("city"))
+            listOfCity.push(props.savecity)
+            let uniqueArray = listOfCity.filter(function(item, pos, self) {
+                return self.indexOf(item) === pos;
+            });
+    
+            localStorage.setItem("city",`${JSON.stringify(uniqueArray)}`)
+        }
+    
     setSavedCountries(JSON.parse(localStorage.getItem("city")))
     }
     return (
@@ -56,11 +57,13 @@ function Form(props) {
                      </datalist> 
                 </div>
                 <div className="col-md-4 mt-md-0 text-md-left">      
-                    <button  onClick={saveCity} className="btn btn-warning">Get Weather</button>
+                    <button  className="btn btn-warning">Get Weather</button>
                 </div>               
             </div>
             <h4 className="col-md-2 offset-md-5 text-danger">{props.placeholderinput}</h4>
             </form>
+            
+            <button className="btn btn-warning text-black" onClick={saveCity}>Save City</button>
             
         </div>
     )
