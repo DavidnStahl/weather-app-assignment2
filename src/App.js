@@ -7,9 +7,7 @@ import Header from './app_component/header'
 function onLoad(){
   if(window.location.protocol==="https:")
            window.location.protocol="http";
-           console.log("hej")
 }
-
 onLoad()
 
 function App() {

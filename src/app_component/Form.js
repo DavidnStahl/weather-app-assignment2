@@ -1,7 +1,6 @@
 import React,{useState} from 'react'
 import './form.style.css'
 
-
 function Form(props) {
     const [InputValue, setInputValue] = useState("");
     const [getCountries] = useState(JSON.parse(localStorage.getItem("city")))
@@ -12,9 +11,6 @@ function Form(props) {
             return [""]
         }
     })
-        
-    
-
     function onInputClick(){
         if(localStorage.getItem("city") != null){
             setSavedCountries(JSON.parse(localStorage.getItem("city")))
@@ -50,10 +46,7 @@ function Form(props) {
                     <input list="cityname" placeholder="City" value={InputValue} onClick={onInputClick} onChange={setInputValueFunction} type="text" className="form-control" name="city" autoComplete="off" />
                     <datalist id="cityname"> 
                        {SavedCountries.map( city => {
-                return <option onClick={setInputValueFunction} value={city} >{city}</option>
-                       
-                 } )        
-        }} 
+                       return <option onClick={setInputValueFunction} value={city} >{city}</option>})}} 
                      </datalist> 
                 </div>
                 <div className="col-md-4 mt-md-0 text-md-left">      
@@ -61,10 +54,8 @@ function Form(props) {
                 </div>               
             </div>
             <h4 className="col-md-2 offset-md-5 text-danger">{props.placeholderinput}</h4>
-            </form>
-            
-            <button className="btn btn-warning text-black" onClick={saveCity}>Save City</button>
-            
+            </form>            
+            <button className="btn btn-warning text-black" onClick={saveCity}>Save as favorite</button>           
         </div>
     )
 }

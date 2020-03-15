@@ -8,6 +8,8 @@ class SearchResultComponent extends Component {
   constructor(){
     super();
     this.state = {
+      lat: "",
+      lon: "",
       saveButton: "No",
       weekday: ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],    
       city:'Stockholm',
@@ -26,8 +28,19 @@ class SearchResultComponent extends Component {
       fiveDayForecast4:{},
       fiveDayForecast5:{}
     };
-
+    this.setGeoLocation();
     this.getGeoLocationWeather(this.state.city);
+  }
+  setGeoLocation(){
+    
+  navigator.geolocation.getCurrentPosition(position => {
+    
+    this.setState({
+      lat: Number(position.coords.latitude).toFixed(3),
+      lon: Number(position.coords.longitude).toFixed(3)
+    })
+    this.getGeoWeather();
+  })
   }
 
   showMoreInfo(){
@@ -36,8 +49,6 @@ class SearchResultComponent extends Component {
         itemArray: [],
         buttonText: "Show five day forecast"
       })
-
-      
       return
     }
     else{
@@ -58,12 +69,27 @@ class SearchResultComponent extends Component {
     })
     }      
   }
-  
 
-  getGeoLocationWeather = async (city) => {
+  getGeoWeather = async () => {
+    let API_Key = "d8f0bc5b04e20b0c7533536f49160c54" 
     
-  let API_Key = "d8f0bc5b04e20b0c7533536f49160c54"
+    let geolocationresponse = await fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${this.state.lat}&lon=${this.state.lon}&appid=${API_Key}`)
+                                     .then( res => {if(!res.ok) {this.setState({errorMessage: "Can´t find city",})
+                                     throw res }this.setState({errorMessage: ""})
+                                     return res.json()})
+                                     console.log(geolocationresponse)
+    let nameArr = geolocationresponse.name.split(" ")
+    this.setState({
+      city:nameArr[0]
 
+    })
+    await this.getGeoLocationWeather(this.state.city)
+  }
+  
+  getGeoLocationWeather = async (city) => {
+
+  let API_Key = "d8f0bc5b04e20b0c7533536f49160c54"
+  
   let response = await fetch(`http://api.openweathermap.org/data/2.5/find?q=${city}&units=metric&appid=${API_Key}`)
                          .then( res => {if(!res.ok) {this.setState({errorMessage: "Can´t find city",})
                                throw res }this.setState({errorMessage: ""})
@@ -75,8 +101,6 @@ class SearchResultComponent extends Component {
                                     .then( res => {if(!res.ok) { throw res }
                                       return res.json();});
 
-                                      
-    
     this.setState({
       city: response.list[0].name,
       country: response.list[0].sys.country,
@@ -138,9 +162,12 @@ class SearchResultComponent extends Component {
   await this.getGeoLocationWeather(city)
     if(this.state.errorMessage === ""){
       this.setState({saveButton: "Yes"})
-    } 
+    }
+    this.setState({
+      itemArray: [],
+      buttonText: "Show five day forecast"
+    })
   }
- 
   render() {
       return (
           <div className="container-fluid">
