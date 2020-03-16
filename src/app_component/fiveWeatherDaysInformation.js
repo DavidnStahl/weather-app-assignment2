@@ -13,7 +13,7 @@ function fiveWeatherDaysInformation(props) {
                     <FiveDayMinMaxTemp tempMinMax={props.tempMinMax}/>
                     <h5 className="py-3">
                       {props.description}
-                    </h5>
+            </h5>
         </div>
     )
 }
