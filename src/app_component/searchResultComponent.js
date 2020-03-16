@@ -35,7 +35,6 @@ class SearchResultComponent extends Component {
   setGeoLocation(){
     
   navigator.geolocation.getCurrentPosition(position => {
-    
     this.setState({
       lat: Number(position.coords.latitude).toFixed(3),
       lon: Number(position.coords.longitude).toFixed(3)
@@ -78,7 +77,7 @@ class SearchResultComponent extends Component {
                                      .then( res => {if(!res.ok) {this.setState({errorMessage: "Can´t find city",})
                                      throw res }this.setState({errorMessage: ""})
                                      return res.json()})
-                                     console.log(geolocationresponse)
+
     let nameArr = geolocationresponse.name.split(" ")
     this.setState({
       city:nameArr[0]
@@ -101,8 +100,6 @@ class SearchResultComponent extends Component {
   let response5dayForecast = await fetch(`http://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&appid=${API_Key}`)
                                     .then( res => {if(!res.ok) { throw res }
                                       return res.json();});
-
-
     this.setState({
       city: response.list[0].name,
       country: response.list[0].sys.country,
@@ -163,8 +160,7 @@ class SearchResultComponent extends Component {
         response5dayForecast.list[38].main.temp_min.toFixed(1),response5dayForecast.list[39].main.temp_min.toFixed(1)],        
         description: response5dayForecast.list[39].weather[0].description,
         weathericon: response5dayForecast.list[39].weather[0].icon
-       }
-       
+       }      
   })
 }
   getWeather = async (e) => {
@@ -189,8 +185,7 @@ class SearchResultComponent extends Component {
           </div>
           </div>
           {this.state.itemArray.map((item) => {
-            return <div className="row mx-md-n5 m-5"  >{item}</div>
-          })}            
+            return <div className="row mx-md-n5 m-5"  >{item}</div>})}            
           </div>
       )
   }
