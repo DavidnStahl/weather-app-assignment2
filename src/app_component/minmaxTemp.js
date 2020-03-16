@@ -1,6 +1,6 @@
 import React from 'react'
 
-function minmaxTemp(props) {
+export default function MinmaxTemp(props) {
     return (
         <div>
             <h5>
@@ -10,4 +10,4 @@ function minmaxTemp(props) {
         </div>
     )
 }
-export default minmaxTemp
+

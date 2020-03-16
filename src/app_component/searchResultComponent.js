@@ -18,6 +18,7 @@ class SearchResultComponent extends Component {
       temp: undefined,
       tempMin:undefined,
       tempMax:undefined,
+      tempMinMax:[],
       description:undefined,
       weathericon:undefined,
       itemArray: [],
@@ -55,11 +56,11 @@ class SearchResultComponent extends Component {
       const item = this.state.itemArray;
       item.push(
       <React.Fragment>
-      <FiveWeatherDaysInformation description={this.state.fiveDayForecast1.description} temp={this.state.fiveDayForecast1.temp}   weathericon={this.state.fiveDayForecast1.weathericon} city={this.state.city} date={this.state.fiveDayForecast1.date}/>
-      <FiveWeatherDaysInformation description={this.state.fiveDayForecast2.description} temp={this.state.fiveDayForecast2.temp}  weathericon={this.state.fiveDayForecast2.weathericon} city={this.state.city} date={this.state.fiveDayForecast2.date}/>
-      <FiveWeatherDaysInformation description={this.state.fiveDayForecast3.description} temp={this.state.fiveDayForecast3.temp}  weathericon={this.state.fiveDayForecast3.weathericon} city={this.state.city} date={this.state.fiveDayForecast3.date}/>
-      <FiveWeatherDaysInformation description={this.state.fiveDayForecast4.description} temp={this.state.fiveDayForecast4.temp}  weathericon={this.state.fiveDayForecast4.weathericon} city={this.state.city} date={this.state.fiveDayForecast4.date}/>
-      <FiveWeatherDaysInformation description={this.state.fiveDayForecast5.description} temp={this.state.fiveDayForecast5.temp}  weathericon={this.state.fiveDayForecast5.weathericon} city={this.state.city} date={this.state.fiveDayForecast5.date}/>
+      <FiveWeatherDaysInformation tempMinMax={this.state.fiveDayForecast1.tempMinMax}  description={this.state.fiveDayForecast1.description} temp={this.state.fiveDayForecast1.temp}   weathericon={this.state.fiveDayForecast1.weathericon} city={this.state.city} date={this.state.fiveDayForecast1.date}/>
+      <FiveWeatherDaysInformation tempMinMax={this.state.fiveDayForecast2.tempMinMax}  description={this.state.fiveDayForecast2.description} temp={this.state.fiveDayForecast2.temp}  weathericon={this.state.fiveDayForecast2.weathericon} city={this.state.city} date={this.state.fiveDayForecast2.date}/>
+      <FiveWeatherDaysInformation tempMinMax={this.state.fiveDayForecast3.tempMinMax}  description={this.state.fiveDayForecast3.description} temp={this.state.fiveDayForecast3.temp}  weathericon={this.state.fiveDayForecast3.weathericon} city={this.state.city} date={this.state.fiveDayForecast3.date}/>
+      <FiveWeatherDaysInformation tempMinMax={this.state.fiveDayForecast4.tempMinMax}  description={this.state.fiveDayForecast4.description} temp={this.state.fiveDayForecast4.temp}  weathericon={this.state.fiveDayForecast4.weathericon} city={this.state.city} date={this.state.fiveDayForecast4.date}/>
+      <FiveWeatherDaysInformation tempMinMax={this.state.fiveDayForecast5.tempMinMax}  description={this.state.fiveDayForecast5.description} temp={this.state.fiveDayForecast5.temp}  weathericon={this.state.fiveDayForecast5.weathericon} city={this.state.city} date={this.state.fiveDayForecast5.date}/>
       </React.Fragment>)
   
     this.setState({
@@ -101,6 +102,7 @@ class SearchResultComponent extends Component {
                                     .then( res => {if(!res.ok) { throw res }
                                       return res.json();});
 
+
     this.setState({
       city: response.list[0].name,
       country: response.list[0].sys.country,
@@ -113,8 +115,10 @@ class SearchResultComponent extends Component {
         city: response.list[0].name,
         date: this.state.weekday[new Date(response5dayForecast.list[7].dt_txt).getDay()],
         temp: response5dayForecast.list[7].main.temp.toFixed(1),
-        tempMin: response5dayForecast.list[7].main.temp_min.toFixed(1),
-        tempMax: response5dayForecast.list[7].main.temp_max.toFixed(1),
+        tempMinMax: [response5dayForecast.list[6].main.temp_min.toFixed(1),response5dayForecast.list[7].main.temp_min.toFixed(1),
+        response5dayForecast.list[8].main.temp_min.toFixed(1),response5dayForecast.list[9].main.temp_min.toFixed(1),
+        response5dayForecast.list[10].main.temp_min.toFixed(1),response5dayForecast.list[11].main.temp_min.toFixed(1),
+        response5dayForecast.list[12].main.temp_min.toFixed(1),response5dayForecast.list[13].main.temp_min.toFixed(1)],
         description: response5dayForecast.list[7].weather[0].description,
         weathericon: response5dayForecast.list[7].weather[0].icon
        },
@@ -122,8 +126,10 @@ class SearchResultComponent extends Component {
         city: response.list[0].name,
         date: this.state.weekday[new Date(response5dayForecast.list[15].dt_txt).getDay()],
         temp: response5dayForecast.list[15].main.temp.toFixed(1),
-        tempMin: response5dayForecast.list[15].main.temp_min.toFixed(1),
-        tempMax: response5dayForecast.list[15].main.temp_max.toFixed(1),
+        tempMinMax: [response5dayForecast.list[14].main.temp_min.toFixed(1),response5dayForecast.list[15].main.temp_min.toFixed(1),
+        response5dayForecast.list[16].main.temp_min.toFixed(1),response5dayForecast.list[17].main.temp_min.toFixed(1),
+        response5dayForecast.list[18].main.temp_min.toFixed(1),response5dayForecast.list[19].main.temp_min.toFixed(1),
+        response5dayForecast.list[20].main.temp_min.toFixed(1),response5dayForecast.list[21].main.temp_min.toFixed(1)],
         description: response5dayForecast.list[15].weather[0].description,
         weathericon: response5dayForecast.list[15].weather[0].icon
        },
@@ -131,8 +137,10 @@ class SearchResultComponent extends Component {
         city: response.list[0].name,
         date: this.state.weekday[new Date(response5dayForecast.list[23].dt_txt).getDay()],
         temp: response5dayForecast.list[23].main.temp.toFixed(1),
-        tempMin: response5dayForecast.list[23].main.temp_min.toFixed(1),
-        tempMax: response5dayForecast.list[23].main.temp_max.toFixed(1),
+        tempMinMax: [response5dayForecast.list[22].main.temp_min.toFixed(1),response5dayForecast.list[23].main.temp_min.toFixed(1),
+        response5dayForecast.list[24].main.temp_min.toFixed(1),response5dayForecast.list[25].main.temp_min.toFixed(1),
+        response5dayForecast.list[26].main.temp_min.toFixed(1),response5dayForecast.list[27].main.temp_min.toFixed(1),
+        response5dayForecast.list[28].main.temp_min.toFixed(1),response5dayForecast.list[29].main.temp_min.toFixed(1)],
         description: response5dayForecast.list[23].weather[0].description,
         weathericon: response5dayForecast.list[23].weather[0].icon
        },
@@ -140,8 +148,10 @@ class SearchResultComponent extends Component {
         city: response.list[0].name,
         date: this.state.weekday[new Date(response5dayForecast.list[31].dt_txt).getDay()],
         temp: response5dayForecast.list[31].main.temp.toFixed(1),
-        tempMin: response5dayForecast.list[31].main.temp_min.toFixed(1),
-        tempMax: response5dayForecast.list[31].main.temp_max.toFixed(1),
+        tempMinMax: [response5dayForecast.list[30].main.temp_min.toFixed(1),response5dayForecast.list[31].main.temp_min.toFixed(1),
+        response5dayForecast.list[32].main.temp_min.toFixed(1),response5dayForecast.list[33].main.temp_min.toFixed(1),
+        response5dayForecast.list[34].main.temp_min.toFixed(1),response5dayForecast.list[35].main.temp_min.toFixed(1),
+        response5dayForecast.list[36].main.temp_min.toFixed(1),response5dayForecast.list[37].main.temp_min.toFixed(1)],
         description: response5dayForecast.list[31].weather[0].description,
         weathericon: response5dayForecast.list[31].weather[0].icon
        },
@@ -149,11 +159,12 @@ class SearchResultComponent extends Component {
         city: response.list[0].name,
         date: this.state.weekday[new Date(response5dayForecast.list[39].dt_txt).getDay()],
         temp: response5dayForecast.list[39].main.temp.toFixed(1),
-        tempMin: response5dayForecast.list[39].main.temp_min.toFixed(1),
-        tempMax: response5dayForecast.list[39].main.temp_max.toFixed(1),
+        tempMinMax: [response5dayForecast.list[30].main.temp_min.toFixed(1),response5dayForecast.list[31].main.temp_min.toFixed(1),
+        response5dayForecast.list[38].main.temp_min.toFixed(1),response5dayForecast.list[39].main.temp_min.toFixed(1)],        
         description: response5dayForecast.list[39].weather[0].description,
         weathericon: response5dayForecast.list[39].weather[0].icon
        }
+       
   })
 }
   getWeather = async (e) => {
@@ -172,7 +183,7 @@ class SearchResultComponent extends Component {
       return (
           <div className="container-fluid">
           <Form placeholderinput={this.state.errorMessage} savecity={this.state.city} loadweather={this.getWeather} buttonsave={this.state.saveButton}/>
-          <Weather  tempMax={this.state.tempMax} tempMin={this.state.tempMin} description={this.state.description}temp={this.state.temp} weathericon={this.state.weathericon} city={this.state.city} country={this.state.country}/>
+          <Weather  tempMax={this.state.tempMax} tempMin={this.state.tempMin} description={this.state.description} temp={this.state.temp} weathericon={this.state.weathericon} city={this.state.city} country={this.state.country}/>
           <div className="row mx-md-n5"><div className="float-left text-center  col px-md-3">
           <button className="btn btn-warning" onClick={this.showMoreInfo.bind(this)}>{this.state.buttonText}</button>
           </div>

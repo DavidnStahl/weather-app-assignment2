@@ -1,6 +1,6 @@
 import React from 'react'
 import SetDescriptionPicture from './setDescriptionPicture';
-import MinmaxTemp from './minmaxTemp';
+import MinmaxTemp from './MinmaxTemp';
 
 
 export default function weather(props){

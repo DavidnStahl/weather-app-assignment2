@@ -1,5 +1,6 @@
 import React from 'react'
 import SetDescriptionPicture from './setDescriptionPicture';
+import FiveDayMinMaxTemp from './FiveDayMinMaxTemp';
 
 function fiveWeatherDaysInformation(props) {
     return (
@@ -9,6 +10,7 @@ function fiveWeatherDaysInformation(props) {
                     <SetDescriptionPicture picture={props.weathericon}/>                    
                     </h5>
                     <h5 className="py-2">{props.temp}&deg;</h5>
+                    <FiveDayMinMaxTemp tempMinMax={props.tempMinMax}/>
                     <h5 className="py-3">
                       {props.description}
                     </h5>
