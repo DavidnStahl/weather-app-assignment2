@@ -14,6 +14,7 @@ class SearchResultComponent extends Component {
       weekday: ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],    
       city:'Stockholm',
       errorMessage: "",
+      time: undefined,
       country:undefined,
       temp: undefined,
       tempMin:undefined,
@@ -32,6 +33,8 @@ class SearchResultComponent extends Component {
     this.setGeoLocation();
     this.getGeoLocationWeather(this.state.city);
   }
+  
+
   setGeoLocation(){
     
   navigator.geolocation.getCurrentPosition(position => {
@@ -85,6 +88,19 @@ class SearchResultComponent extends Component {
     })
     await this.getGeoLocationWeather(this.state.city)
   }
+  calculateLocalTime(timezone){
+    let today = new Date()
+    console.log()
+    today.setHours(today.getHours(),today.getMinutes() - 60 + parseInt(timezone/60));
+    today.toTimeString()
+    let time = today.toTimeString().split(" ");
+    console.log(time[0])
+
+   this.setState({
+     time:time[0]
+   })
+
+  }
   
   getGeoLocationWeather = async (city) => {
 
@@ -100,6 +116,7 @@ class SearchResultComponent extends Component {
   let response5dayForecast = await fetch(`http://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&appid=${API_Key}`)
                                     .then( res => {if(!res.ok) { throw res }
                                       return res.json();});
+    this.calculateLocalTime(response2.timezone)                                 
     this.setState({
       city: response.list[0].name,
       country: response.list[0].sys.country,
@@ -111,7 +128,7 @@ class SearchResultComponent extends Component {
       fiveDayForecast1: {
         city: response.list[0].name,
         date: this.state.weekday[new Date(response5dayForecast.list[7].dt_txt).getDay()],
-        temp: response5dayForecast.list[7].main.temp.toFixed(1),
+        temp: response5dayForecast.list[9].main.temp.toFixed(1),
         tempMinMax: [response5dayForecast.list[6].main.temp_min.toFixed(1),response5dayForecast.list[7].main.temp_min.toFixed(1),
         response5dayForecast.list[8].main.temp_min.toFixed(1),response5dayForecast.list[9].main.temp_min.toFixed(1),
         response5dayForecast.list[10].main.temp_min.toFixed(1),response5dayForecast.list[11].main.temp_min.toFixed(1),
@@ -122,7 +139,7 @@ class SearchResultComponent extends Component {
        fiveDayForecast2: {
         city: response.list[0].name,
         date: this.state.weekday[new Date(response5dayForecast.list[15].dt_txt).getDay()],
-        temp: response5dayForecast.list[15].main.temp.toFixed(1),
+        temp: response5dayForecast.list[17].main.temp.toFixed(1),
         tempMinMax: [response5dayForecast.list[14].main.temp_min.toFixed(1),response5dayForecast.list[15].main.temp_min.toFixed(1),
         response5dayForecast.list[16].main.temp_min.toFixed(1),response5dayForecast.list[17].main.temp_min.toFixed(1),
         response5dayForecast.list[18].main.temp_min.toFixed(1),response5dayForecast.list[19].main.temp_min.toFixed(1),
@@ -133,7 +150,7 @@ class SearchResultComponent extends Component {
        fiveDayForecast3: {
         city: response.list[0].name,
         date: this.state.weekday[new Date(response5dayForecast.list[23].dt_txt).getDay()],
-        temp: response5dayForecast.list[23].main.temp.toFixed(1),
+        temp: response5dayForecast.list[25].main.temp.toFixed(1),
         tempMinMax: [response5dayForecast.list[22].main.temp_min.toFixed(1),response5dayForecast.list[23].main.temp_min.toFixed(1),
         response5dayForecast.list[24].main.temp_min.toFixed(1),response5dayForecast.list[25].main.temp_min.toFixed(1),
         response5dayForecast.list[26].main.temp_min.toFixed(1),response5dayForecast.list[27].main.temp_min.toFixed(1),
@@ -144,7 +161,7 @@ class SearchResultComponent extends Component {
        fiveDayForecast4: {
         city: response.list[0].name,
         date: this.state.weekday[new Date(response5dayForecast.list[31].dt_txt).getDay()],
-        temp: response5dayForecast.list[31].main.temp.toFixed(1),
+        temp: response5dayForecast.list[33].main.temp.toFixed(1),
         tempMinMax: [response5dayForecast.list[30].main.temp_min.toFixed(1),response5dayForecast.list[31].main.temp_min.toFixed(1),
         response5dayForecast.list[32].main.temp_min.toFixed(1),response5dayForecast.list[33].main.temp_min.toFixed(1),
         response5dayForecast.list[34].main.temp_min.toFixed(1),response5dayForecast.list[35].main.temp_min.toFixed(1),
@@ -179,7 +196,7 @@ class SearchResultComponent extends Component {
       return (
           <div className="container-fluid">
           <Form placeholderinput={this.state.errorMessage} savecity={this.state.city} loadweather={this.getWeather} buttonsave={this.state.saveButton}/>
-          <Weather  tempMax={this.state.tempMax} tempMin={this.state.tempMin} description={this.state.description} temp={this.state.temp} weathericon={this.state.weathericon} city={this.state.city} country={this.state.country}/>
+          <Weather  time={this.state.time} tempMax={this.state.tempMax} tempMin={this.state.tempMin} description={this.state.description} temp={this.state.temp} weathericon={this.state.weathericon} city={this.state.city} country={this.state.country}/>
           <div className="row mx-md-n5"><div className="float-left text-center  col px-md-3">
           <button className="btn btn-warning" onClick={this.showMoreInfo.bind(this)}>{this.state.buttonText}</button>
           </div>

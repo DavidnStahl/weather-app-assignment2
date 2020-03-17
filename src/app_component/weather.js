@@ -9,6 +9,7 @@ export default function weather(props){
                 <div className="container text-center">
                   <div className ="cards m-5">
                     <h3>{props.city}, {props.country}</h3>
+                    <h4> Time:  {props.time}</h4>
                     <h3 className="py-8">
                     <SetDescriptionPicture picture={props.weathericon}/>                    
                     </h3>
